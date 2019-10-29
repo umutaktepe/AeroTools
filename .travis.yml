@@ -8,4 +8,4 @@ install:
   - pip3 install XlsxWriter
   - pip3 install matplotlib
 script:
-  - python3 AeroTools.py
+  - python3.7 AeroTools.py
