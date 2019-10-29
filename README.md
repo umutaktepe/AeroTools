@@ -40,6 +40,13 @@ $ pip3 install xlwt
 ```
 **or you can use your own IDE to install the packages.*
 
+Get clone in Linux terminal:
+
+```sh
+$ git clone https://github.com/umutaktepe/AeroTools.git
+
+```
+
 #### Todos
 
  - Add more graphs to plot
