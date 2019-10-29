@@ -1,9 +1,9 @@
 language: python
-python:
-  - "3.7"
-cache: pip3
+jobs:
+  include:
+    - name: "Python 3.7.1 on Bionic Linux"
+      python: 3.7
 install:
-  - pip3 install tox-travis
   - pip3 install PyQt5
   - pip3 install XlsxWriter
   - pip3 install matplotlib
