@@ -2,20 +2,20 @@
 
 # AeroTools
 
-![Pyup Status](https://pyup.io/repos/github/umutaktepe/AeroTools/shield.svg?t=1572373789737) [![GitHub issues](https://img.shields.io/github/issues/umutaktepe/AeroTools)](https://github.com/umutaktepe/AeroTools/issues) [![Known Vulnerabilities](https://snyk.io/test/github/umutaktepe/AeroTools/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/umutaktepe/AeroTools?targetFile=requirements.txt) [![GitHub license](https://img.shields.io/github/license/umutaktepe/AeroTools)](https://github.com/umutaktepe/AeroTools/blob/master/LICENSE)
+[![Pyup Status](https://pyup.io/repos/github/umutaktepe/AeroTools/shield.svg?t=1572373789737)](https://pyup.io/account/repos/github/umutaktepe/AeroTools/) [![GitHub issues](https://img.shields.io/github/issues/umutaktepe/AeroTools)](https://github.com/umutaktepe/AeroTools/issues) [![Known Vulnerabilities](https://snyk.io/test/github/umutaktepe/AeroTools/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/umutaktepe/AeroTools?targetFile=requirements.txt) [![GitHub license](https://img.shields.io/github/license/umutaktepe/AeroTools)](https://github.com/umutaktepe/AeroTools/blob/master/LICENSE)
 
 AeroTools is a toolset written in Python. It allows you to:
 
   - Calculate some complex aerodynamics related equations
   - Plot certain performance graphs
 
-### What can you calculate?
+#### What can you calculate?
   - Takeoff and landing speeds
   - Takeoff and landing distances
   - Thrust and power required in certain velocities
   - Wing loading and aspect ratio
 
-### What can you plot?
+#### What can you plot?
   - Lift coefficient vs Velocity graph
   - Thrust required vs Velocity graph
   - Power required vs Velocity graph
@@ -23,132 +23,31 @@ AeroTools is a toolset written in Python. It allows you to:
   - Lift-to-drag ratio vs Velocity graph
   - Thrust available vs Thrust required graph
 
-### Usage
+#### Usage
 
 AeroTools requires Python 3+ and the packages which are specified in [requirements file.](/requirements.txt "Required Python Packages")
 
-Install the dependencies and devDependencies and start the server.
+To install the necessary packages:
 
 ```sh
-$ cd dillinger
-$ npm install -d
-$ node app
+$ pip3 install PyQt5
+$ pip3 install numpy
+$ pip3 install PyQt5
+$ pip3 install XlsxWriter
+$ pip3 install matplotlib
+$ pip3 install xlrd
+$ pip3 install xlwt
 ```
+**or you can use your own IDE to install the packages.*
 
-For production environments...
+#### Todos
 
-```sh
-$ npm install --production
-$ NODE_ENV=production node app
-```
-
-### Plugins
-
-Dillinger is currently extended with the following plugins. Instructions on how to use them in your own application are linked below.
-
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
-
-
-### Development
-
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantanously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
-```sh
-$ node app
-```
-
-Second Tab:
-```sh
-$ gulp watch
-```
-
-(optional) Third:
-```sh
-$ karma test
-```
-#### Building for source
-For production release:
-```sh
-$ gulp build --prod
-```
-Generating pre-built zip archives for distribution:
-```sh
-$ gulp build dist --prod
-```
-### Docker
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the Dockerfile if necessary. When ready, simply use the Dockerfile to build the image.
-
-```sh
-cd dillinger
-docker build -t joemccann/dillinger:${package.json.version} .
-```
-This will create the dillinger image and pull in the necessary dependencies. Be sure to swap out `${package.json.version}` with the actual version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8000 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart="always" <youruser>/dillinger:${package.json.version}
-```
-
-Verify the deployment by navigating to your server address in your preferred browser.
-
-```sh
-127.0.0.1:8000
-```
-
-#### Kubernetes + Google Cloud
-
-See [KUBERNETES.md](https://github.com/joemccann/dillinger/blob/master/KUBERNETES.md)
-
-
-### Todos
-
- - Write MORE Tests
- - Add Night Mode
+ - Add more graphs to plot
+ - Translate in Turkish
 
 License
 ----
 
-MIT
+GNU General Public License v3.0
 
-
-**Free Software, Hell Yeah!**
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
+**Enjoy your free software. If you want to develop it, it will be appreciated :)**
