@@ -3,7 +3,12 @@ jobs:
   include:
     - name: "Python 3.7.1 on Bionic Linux"
       python: 3.7
+      before_install:
+        - choco install python --version 3.7.1
+        - python -m pip install --upgrade pip
+      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 install:
+  - pip3 install --upgrade pip
   - pip3 install PyQt5
   - pip3 install XlsxWriter
   - pip3 install matplotlib
