@@ -4,5 +4,8 @@ python:
 cache: pip3
 install:
   - pip3 install tox-travis
+  - pip3 install PyQt5
+  - pip3 install XlsxWriter
+  - pip3 install matplotlib
 script:
   - python3 AeroTools.py
