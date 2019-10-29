@@ -9,7 +9,7 @@ jobs:
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 install:
   - pip3 install --upgrade pip
-  - pip3 install PyQt5
+  - pip install --upgrade --force-reinstall
   - pip3 install XlsxWriter
   - pip3 install matplotlib
   - pip3 install numpy
