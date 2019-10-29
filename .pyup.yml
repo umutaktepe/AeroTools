@@ -1,0 +1,8 @@
+update: all
+pin: True
+branch: master
+schedule: "every day"
+search: True
+branch_prefix: pyup/
+pr_prefix: "Bug #12345"
+close_prs: True
