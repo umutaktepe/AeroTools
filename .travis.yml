@@ -7,5 +7,6 @@ install:
   - pip3 install PyQt5
   - pip3 install XlsxWriter
   - pip3 install matplotlib
+  - pip3 install numpy
 script:
   - python3.7 AeroTools.py
