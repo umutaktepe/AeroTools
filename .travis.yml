@@ -9,4 +9,4 @@ install:
   - pip3 install matplotlib
   - pip3 install numpy
 script:
-  - python3.7 AeroTools.py
+  - python3 AeroTools.py
