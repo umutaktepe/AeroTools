@@ -27,7 +27,7 @@ AeroTools is a toolset written in Python. It allows you to:
 
 AeroTools requires Python 3+ and the packages which are specified in [requirements file.](/requirements.txt "Required Python Packages")
 
-To install the necessary packages:
+1. To install the necessary packages:
 
 ```sh
 $ pip3 install PyQt5
@@ -40,12 +40,26 @@ $ pip3 install xlwt
 ```
 **or you can use your own IDE to install the packages.*
 
-Get clone in Linux terminal:
+2. Get clone in Linux terminal:
 
 ```sh
 $ git clone https://github.com/umutaktepe/AeroTools.git
-
 ```
+
+3. Go to the directory:
+
+```sh
+$ cd AeroTools
+```
+
+4. Run AeroTools.py:
+
+```sh
+$ python3 AeroTools.py
+```
+
+5. Enjoy it!
+
 
 #### Todos
 
