@@ -22,6 +22,8 @@ AeroTools is a toolset written in Python. It allows you to:
   - Drag vs Velocity graph
   - Lift-to-drag ratio vs Velocity graph
   - Thrust available vs Thrust required graph
+  
+AeroTools can also be used for performance calculations of scaled and model UAVs as well. It provides reliable data based on the equations provided in aerospace industry.
 
 #### Usage
 
