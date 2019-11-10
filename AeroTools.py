@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from PyQt5 import QtWidgets, QtGui
 from PyQt5 import uic
 import numpy as np
