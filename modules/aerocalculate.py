@@ -100,7 +100,7 @@ class Calculate:
         drag = 0.5*rho*wingarea*cd*v_td_ave**2
         lift = 0.5*rho*wingarea*max_cl*v_td_ave**2
 
-        f_eff = (drag + rfriction_coef*(weight - lift))
+        f_eff = (drag + rfriction_coef*(g*weight - lift))
 
         return (1.69*(g*weight)**2)/(g*rho*wingarea*max_cl*f_eff)
 
