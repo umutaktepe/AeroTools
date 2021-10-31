@@ -108,5 +108,5 @@ class Calculate:
 
         v_stall = (2*weight*g/(rho*wingarea*max_cl))**0.5
 
-        return 1.3*v_stall
+        return (1.3*v_stall)
 
