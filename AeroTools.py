@@ -23,7 +23,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.center()
         self.pullChildren()
         self.setValidators()
-        self.setFixedSize(1100, 620)
+        self.setFixedSize(1100, 950)
 
         self.statBar = QtWidgets.QStatusBar()
         self.statBar.setStyleSheet("QStatusBar {color: dimgray; font: italic 14px}")
@@ -46,6 +46,9 @@ class MainWindow(QtWidgets.QMainWindow):
         memorize.clicked.connect(self.memorize)
         toLand_calculate.clicked.connect(self.toandLandingData_compute)
         thrustpowerReq_calculate.clicked.connect(self.thrustpowerReq_compute)
+        breguet_calculate.clicked.connect(self.breguet_range_endurance_compute)
+        acType_jetEngine_button.clicked.connect(lambda: self.setAircraftType(self.AIRCRAFT_TYPE_JET))
+        acType_propeller_button.clicked.connect(lambda: self.setAircraftType(self.AIRCRAFT_TYPE_PROPELLER))
 
         credit_github.triggered.connect(self.visitGithub)
         credit_linkedin.triggered.connect(self.visitLinkedin)
@@ -57,6 +60,12 @@ class MainWindow(QtWidgets.QMainWindow):
         dragvsVel_button.clicked.connect(self.showDragvsVelDialog)
         ltodvsVel_button.clicked.connect(self.showLtodvsVelDialog)
         travvsThrReq_button.clicked.connect(self.showAvthrvsThrReqDialog)
+
+        #####################
+        # Setting flag for aircraft type #
+        self.AIRCRAFT_TYPE_JET = "Jet"
+        self.AIRCRAFT_TYPE_PROPELLER = "Propeller"
+        self.breguet_ac_type_Flag = self.AIRCRAFT_TYPE_JET
 
     def center(self):
 
@@ -73,6 +82,8 @@ class MainWindow(QtWidgets.QMainWindow):
         global toDist_edit, toSpeed_edit, landingDist_edit, landingSpeed_edit, thrustpowerReq_vel
         global thrustpowerReq_calculate, thrustReq_edit, powerReq_edit, wingLoading_edit, aspectRatio_edit
         global clvsVel_button, thrvsVel_button, powvsVel_button, dragvsVel_button, ltodvsVel_button, travvsThrReq_button
+        global acType_jetEngine_button, acType_propeller_button, breguet_calculate
+        global breguet_vel, breguet_fuel, breguet_sfc, breguet_sfc_unit, breguet_prop_eff, breguet_range_edit, breguet_endurance_edit
 
         #####################
         # Input lines start #
@@ -98,6 +109,18 @@ class MainWindow(QtWidgets.QMainWindow):
         powerReq_edit = self.findChild(QtWidgets.QLabel, 'powerReq_EditLabel')
         wingLoading_edit = self.findChild(QtWidgets.QLabel, 'wingLoading_EditLabel')
         aspectRatio_edit = self.findChild(QtWidgets.QLabel, 'aspectRatio_EditLabel')
+        acType_jetEngine_button = self.findChild(QtWidgets.QPushButton, 'breguet_jetEngine_pushButton')
+        acType_propeller_button = self.findChild(QtWidgets.QPushButton, 'breguet_Propeller_pushButton')
+        breguet_calculate = self.findChild(QtWidgets.QPushButton, 'breguet_calculate_button')
+        breguet_vel = self.findChild(QtWidgets.QLineEdit, 'breguet_Vel_lineEdit')
+        breguet_fuel = self.findChild(QtWidgets.QLineEdit, 'breguet_fuel_weight_lineEdit')
+        breguet_sfc = self.findChild(QtWidgets.QLineEdit, 'breguet_sfc_lineEdit')
+        breguet_prop_eff = self.findChild(QtWidgets.QLineEdit, 'breguet_prop_eff_lineEdit')
+        breguet_prop_eff.setEnabled(False)
+        breguet_sfc_unit = self.findChild(QtWidgets.QLabel, 'breguet_sfc_unit_label')
+        breguet_range_edit = self.findChild(QtWidgets.QLabel, 'toRange_EditLabel')
+        breguet_endurance_edit = self.findChild(QtWidgets.QLabel, 'toEndurance_EditLabel')
+
 
         # Input lines end #
         ###################
@@ -125,6 +148,11 @@ class MainWindow(QtWidgets.QMainWindow):
         cd0.setValidator(double_validator)
         avthr.setValidator(double_validator)
         thrustpowerReq_vel.setValidator(double_validator)
+        breguet_vel.setValidator(double_validator)
+        breguet_fuel.setValidator(double_validator)
+        breguet_sfc.setValidator(double_validator)
+        breguet_prop_eff.setValidator(double_validator)
+
 
     @staticmethod
     def showValueError():
@@ -351,6 +379,64 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.showValueError()
             else:
                 self.showZeroDivisionError()
+
+    def setAircraftType(self, type):
+        self.breguet_ac_type_Flag = type
+
+        if type == self.AIRCRAFT_TYPE_JET:
+            breguet_prop_eff.setEnabled(False)
+            acType_jetEngine_button.setStyleSheet("QPushButton {background-color: rgb(0, 255, 0);}")
+            acType_propeller_button.setStyleSheet("QPushButton {background-color: rgb(208, 208, 208);}")
+            breguet_sfc_unit.setText("""
+                            <html> 
+                            <head/> 
+                            <body> 
+                            <p><span style=" font-size:12pt;">g/(s.kN)</span></p>
+                            </body> 
+                            </html>""")
+        else:
+            breguet_prop_eff.setEnabled(True)
+            acType_jetEngine_button.setStyleSheet("QPushButton {background-color: rgb(208, 208, 208);}")
+            acType_propeller_button.setStyleSheet("QPushButton {background-color: rgb(0, 255, 0);}")
+            breguet_sfc_unit.setText("""
+                            <html> 
+                            <head/> 
+                            <body> 
+                            <p><span style=" font-size:12pt;">g/(h.kW)</span></p>
+                            </body> 
+                            </html>""")
+
+    def breguet_range_endurance_compute(self):
+
+        try:
+            breguet_calc_init = acalculate()
+            k = breguet_calc_init.kFactor(wingspan=float(wingspan.text()), wingarea=float(wingarea.text()), oef=float(oef_db.value()))
+            cl = breguet_calc_init.liftcoefficient_C(v=float(breguet_vel.text()), weight=float(weight.text()), wingarea=float(wingarea.text()), rho=float(rho.text()))
+            cd = breguet_calc_init.dragcoefficient(cd0=float(cd0.text()), k=k, cl= cl)
+            range = breguet_calc_init.breguet_range(ac_type=self.breguet_ac_type_Flag ,cl=cl, cd=cd, weight=float(weight.text()), fuel=float(breguet_fuel.text()), rho=float(rho.text()), wingarea=float(wingarea.text()), sfc=float(breguet_sfc.text()), prop_eff=float(breguet_prop_eff.text()) if self.breguet_ac_type_Flag == self.AIRCRAFT_TYPE_PROPELLER else 0)
+            breguet_range_edit.setText("""
+                            <html> 
+                            <head/> 
+                            <body> 
+                            <p><span style=" font-size:14pt; color:#3465a4;">{0:,f} km</span></p>
+                            </body> 
+                            </html>""".format(range))
+
+            endurance = breguet_calc_init.breguet_endurance(ac_type=self.breguet_ac_type_Flag, cl=cl, cd=cd, rho=float(rho.text()), weight=float(weight.text()), fuel=float(breguet_fuel.text()), sfc=float(breguet_sfc.text()), wingarea=float(wingarea.text()), prop_eff=float(breguet_prop_eff.text()) if self.breguet_ac_type_Flag == self.AIRCRAFT_TYPE_PROPELLER else 0)
+            breguet_endurance_edit.setText("""
+                            <html> 
+                            <head/> 
+                            <body> 
+                            <p><span style=" font-size:14pt; color:#3465a4;">{0:.1f} hr</span></p>
+                            </body> 
+                            </html>""".format(endurance))
+
+        except (ValueError, ZeroDivisionError) as error:
+            if len(error.args) > 0 and error.args[0] == 'could not convert string to float: ':
+                self.showValueError()
+            else:
+                self.showZeroDivisionError()
+
 
     @staticmethod
     def wingLoadingandAr():

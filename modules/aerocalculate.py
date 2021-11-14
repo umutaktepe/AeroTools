@@ -1,5 +1,7 @@
 import numpy as np
 from math import pi
+from math import sqrt
+from math import log
 
 g = 9.81
 
@@ -8,6 +10,11 @@ class Calculate:
 
     def __init__(self):
         super(Calculate, self).__init__()
+
+        #####################
+        # Setting flag for aircraft type #
+        self.AIRCRAFT_TYPE_JET = "Jet"
+        self.AIRCRAFT_TYPE_PROPELLER = "Propeller"
 
     def wingLoading(self, weight, wingarea):
 
@@ -110,3 +117,29 @@ class Calculate:
 
         return (1.3*v_stall)
 
+    def breguet_range(self, ac_type, cl, cd, rho, weight, fuel, wingarea, sfc, prop_eff=0):
+
+        if ac_type == self.AIRCRAFT_TYPE_JET:
+            sfc_conv = sfc / 1000000
+            range_numerator = 2 * sqrt(2) * sqrt(cl) * (sqrt(weight) - sqrt(weight - fuel))
+            range_denominator = sfc_conv * cd * sqrt((rho * wingarea))
+            range = range_numerator / range_denominator
+            return (range/1000)
+        else:
+            sfc_conv = sfc / (1000*3600*1000)
+            range = ((prop_eff / 100) * cl * log(weight / (weight - fuel))) / (sfc_conv * cd * 1000)
+            return range
+
+    def breguet_endurance(self, ac_type, cl, cd, rho, weight, fuel, sfc, wingarea, prop_eff=0):
+
+        if ac_type == self.AIRCRAFT_TYPE_JET:
+            sfc_conv = sfc / 1000000
+            endurance = (cl * log(weight / (weight - fuel))) / (sfc_conv * cd)
+            return (endurance/3600)
+        else:
+            sfc_conv = sfc / (1000*3600*1000)
+            weight_factor = ((1/sqrt(weight - fuel))-(1/sqrt(weight)))
+            endurance_numerator = weight_factor * (prop_eff / 100) * sqrt(2 * rho * wingarea) * sqrt(cl**3)
+            endurance_denominator = sfc_conv * cd
+            endurance = endurance_numerator / endurance_denominator
+            return (endurance/3600)
