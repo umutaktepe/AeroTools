@@ -14,6 +14,7 @@ AeroTools is a toolset written in Python. It allows you to:
   - Takeoff and landing distances
   - Thrust and power required in certain velocities
   - Wing loading and aspect ratio
+  - Breguet Range and Endurance for Propeller and Jet-Engine aircrafts
 
 #### What can you plot?
   - Lift coefficient vs Velocity graph
@@ -34,7 +35,6 @@ AeroTools requires Python 3+ and the packages which are specified in [requiremen
 ```sh
 $ pip3 install PyQt5
 $ pip3 install numpy
-$ pip3 install PyQt5
 $ pip3 install XlsxWriter
 $ pip3 install matplotlib
 $ pip3 install xlrd
