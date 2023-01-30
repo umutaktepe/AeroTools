@@ -1,6 +1,6 @@
 cycler==0.11.0
 kiwisolver==1.4.4
-matplotlib==3.1.2
+matplotlib==3.6.3
 numpy==1.17.4
 PyQt5==5.13.0
 PyQt5-sip==4.19.19
