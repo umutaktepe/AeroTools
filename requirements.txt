@@ -3,7 +3,7 @@ kiwisolver==1.4.4
 matplotlib==3.7.2
 numpy==1.25.1
 PyQt5==5.15.9
-PyQt5-sip==4.19.19
+PyQt5-sip==12.12.2
 PyQt5-stubs==5.13.0.1
 six==1.13.0
 xlrd==1.2.0
