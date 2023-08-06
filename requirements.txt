@@ -4,7 +4,7 @@ matplotlib==3.7.2
 numpy==1.25.2
 PyQt5==5.15.9
 PyQt5-sip==12.12.2
-PyQt5-stubs==5.13.0.1
+PyQt5-stubs==5.15.6.0
 six==1.13.0
 xlrd==1.2.0
 XlsxWriter==1.2.6
